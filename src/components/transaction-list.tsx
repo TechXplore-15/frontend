@@ -21,8 +21,8 @@ const transactions: Transaction[] = [
   },
   {
     date: '15 იან 2025',
-    description: 'დავით ნანავა, პირადი გადარიცხვა თი...',
-    amount: -1700.0,
+    description: 'გია ინწკირველი, პირადი გადარიცხვა თი...',
+    amount: -1400.0,
   },
   {
     date: '15 იან 2025',
@@ -31,7 +31,7 @@ const transactions: Transaction[] = [
   },
   {
     date: '15 იან 2025',
-    description: 'კახა ნანავა, მომსახურების საფასური',
+    description: 'დიკო მესხიშვილი, მომსახურების საფასური',
     amount: 1720.0,
   },
   {
