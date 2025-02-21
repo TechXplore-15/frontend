@@ -38,6 +38,10 @@ jobs:
         run: |
           docker compose -f ${{ github.workspace }}/compose.yml build
 
+      - name: Create Proxy Network
+        run: |
+          docker network create proxy
+
       - name: Run Tests
         run: |
           docker compose up -d
