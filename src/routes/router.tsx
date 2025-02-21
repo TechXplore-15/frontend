@@ -10,7 +10,6 @@ export const appRouter = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<Layout />}>
       <Route index element={<HomeView />} />
-      {/* <Route path='*' element={<NotFound />} /> */}
     </Route>,
   ),
 );
