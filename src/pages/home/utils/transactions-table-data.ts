@@ -1,4 +1,4 @@
-import { type Transaction } from '@/pages/home/components/types';
+import { type Transaction } from '@/pages/home/components/transacitons/types';
 
 export const transactions: Transaction[] = [
   {

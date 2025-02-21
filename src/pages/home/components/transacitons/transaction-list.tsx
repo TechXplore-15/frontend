@@ -20,6 +20,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { transactions } from '@/pages/home/utils/transactions-table-data';
 import { columns } from '@/pages/home/utils/transaction-table-columns';
+import { SingleTransactionDialog } from '@/pages/home/components/transacitons/single-transaction-dialog';
 
 export const TransactionList: React.FC = () => {
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -72,20 +73,25 @@ export const TransactionList: React.FC = () => {
           <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow
+                <SingleTransactionDialog
                   key={row.id}
-                  data-state={row.getIsSelected() && 'selected'}
-                  className='group hover:bg-muted/20 h-16'
+                  transaction={row.original}
                 >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext(),
-                      )}
-                    </TableCell>
-                  ))}
-                </TableRow>
+                  <TableRow
+                    key={row.id}
+                    data-state={row.getIsSelected() && 'selected'}
+                    className='group hover:bg-muted/20 h-16'
+                  >
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell key={cell.id}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext(),
+                        )}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                </SingleTransactionDialog>
               ))
             ) : (
               <TableRow>
