@@ -79,9 +79,9 @@ jobs:
           username: root
           key: ${{ env.SSH_PRIVATE_KEY }}
           script: |
+            cd ${DEPLOY_DIR}
             pwd
             ls
-            cd ${DEPLOY_DIR}
             git pull
             docker compose build
             docker compose down
