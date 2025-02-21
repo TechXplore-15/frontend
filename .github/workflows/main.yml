@@ -20,6 +20,8 @@ jobs:
         run: |
           sudo chown -R $USER:$USER ${{ github.workspace }}
           sudo chmod -R u+rwX ${{ github.workspace }}
+          pwd ${{ github.workspace }}
+          ls ${{ github.workspace }}
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
@@ -34,7 +36,7 @@ jobs:
 
       - name: Build Docker Images
         run: |
-          docker compose -f compose.yml build
+          docker compose -f ${{ github.workspace }}/compose.yml build
 
       - name: Run Tests
         run: |
