@@ -11,18 +11,12 @@ export const subscribeSchema = z.object({
   endDate: z
     .date()
     .optional()
-    .refine(
-      (value) => {
-        if (value) {
-          return false;
-        }
-        return true;
-      },
-      {
-        message:
-          'თუ გამოწერა არ არის აქტიური, დასრულების თარიღი არ უნდა იყოს მითითებული',
-      },
-    ),
+    .refine((value) => {
+      if (value) {
+        return false;
+      }
+      return true;
+    }),
 });
 
 export type SubscribeSchema = z.infer<typeof subscribeSchema>;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import {
@@ -11,6 +11,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -35,7 +36,18 @@ export const SubscribeForm: React.FC = () => {
     },
   });
 
-  const onSubmit = async (values: SubscribeSchema) => {
+  const isActive = form.watch('isActive');
+
+  console.log(isActive);
+  console.log(form.formState.errors);
+
+  useEffect(() => {
+    if (!isActive) {
+      form.setValue('endDate', undefined);
+    }
+  }, [isActive, form]);
+
+  const onSubmit = (values: SubscribeSchema) => {
     console.log(values);
   };
 
@@ -50,6 +62,7 @@ export const SubscribeForm: React.FC = () => {
               <FormControl>
                 <Input placeholder='გამოწერის სახელი' {...field} />
               </FormControl>
+              <FormMessage className='text-red-500' />
             </FormItem>
           )}
         />
@@ -68,6 +81,7 @@ export const SubscribeForm: React.FC = () => {
               <div className='space-y-1 leading-none'>
                 <FormLabel>აქტიური გამოწერა</FormLabel>
               </div>
+              <FormMessage className='text-red-500' />
             </FormItem>
           )}
         />
@@ -106,6 +120,7 @@ export const SubscribeForm: React.FC = () => {
                   />
                 </PopoverContent>
               </Popover>
+              <FormMessage className='text-red-600' />
             </FormItem>
           )}
         />
