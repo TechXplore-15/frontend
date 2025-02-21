@@ -34,7 +34,7 @@ jobs:
 
       - name: Build Docker Images
         run: |
-          docker compose build
+          docker compose -f compose.yml build
 
       - name: Run Tests
         run: |
