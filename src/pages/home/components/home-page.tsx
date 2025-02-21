@@ -1,4 +1,4 @@
-import TransactionList from '@/components/transaction-list';
+import { TransactionList } from '@/pages/home/components/transaction-list';
 import React from 'react';
 
 const HomePage: React.FC = () => {
