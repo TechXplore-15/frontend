@@ -1,4 +1,4 @@
-import type { Transaction } from '@/components/types';
+import type { Transaction } from '@/pages/home/components/types';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table';
 import { CheckCircle2 } from 'lucide-react';
@@ -41,29 +41,33 @@ const transactions: Transaction[] = [
   },
 ];
 
-export default function TransactionList() {
+export const TransactionList = () => {
   return (
-    <Card className='w-full max-w-3xl'>
-      <CardHeader>
+    <Card className='w-full min-w-xl'>
+      <CardHeader className='border-b'>
         <CardTitle className='text-lg font-medium'>ბოლო ტრანზაქციები</CardTitle>
       </CardHeader>
       <CardContent>
         <Table>
           <TableBody>
             {transactions.map((transaction, index) => (
-              <TableRow key={index} className='group hover:bg-muted/50'>
-                <TableCell className='flex items-center gap-3'>
-                  <CheckCircle2 className='h-4 w-4 text-green-500' />
-                  <span className='text-sm text-muted-foreground'>
+              <TableRow key={index} className='group hover:bg-muted/50 h-16'>
+                <TableCell>
+                  <CheckCircle2 className='size-4 text-green-700' />
+                </TableCell>
+                <TableCell>
+                  <span className='whitespace-nowrap text-xs text-muted-foreground'>
                     {transaction.date}
                   </span>
                 </TableCell>
                 <TableCell className='w-full'>
-                  <span className='text-sm'>{transaction.description}</span>
+                  <span className='text-sm font-medium text-foreground'>
+                    {transaction.description}
+                  </span>
                 </TableCell>
                 <TableCell className='text-right'>
                   <span
-                    className={`text-sm font-medium ${
+                    className={`text-sm font-medium whitespace-nowrap ${
                       transaction.amount > 0
                         ? 'text-green-600'
                         : 'text-muted-foreground'
@@ -77,6 +81,7 @@ export default function TransactionList() {
                     GEL
                   </span>
                 </TableCell>
+                <TableCell></TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -84,4 +89,4 @@ export default function TransactionList() {
       </CardContent>
     </Card>
   );
-}
+};
