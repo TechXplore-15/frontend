@@ -8,28 +8,45 @@ on:
 
 jobs:
   build:
-    name: Build Docker Images
+    name: Build and Test Docker Images
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # Optional: Fix repo permissions
       - name: Fix Repo Permissions
         run: |
           sudo chown -R $USER:$USER ${{ github.workspace }}
           sudo chmod -R u+rwX ${{ github.workspace }}
 
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Cache Docker layers
+        uses: actions/cache@v3
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
 
       - name: Build Docker Images
         run: |
-          docker compose build
+          docker compose build \
+            --cache-from type=local,src=/tmp/.buildx-cache \
+            --cache-to type=local,dest=/tmp/.buildx-cache
 
-      - name: Test & Cleanup
+      - name: Run Tests
         run: |
-          docker compose down &&
-          docker compose up -d &&
-          docker image prune -af &&
-          docker builder prune
+          docker compose up -d
+          docker compose down
+
+      - name: Cleanup Docker Resources
+        run: |
+          docker image prune -af
+          docker builder prune -af
 
   deploy:
     name: Deploy to Dev Server
@@ -47,23 +64,25 @@ jobs:
     steps:
       - name: Setup SSH Key
         run: |
-          set -e  # Exit immediately if a non-zero status
-          echo "${SSH_PRIVATE_KEY}" > ~/id_ed25519
-          chmod 600 ~/id_ed25519
+          mkdir -p ~/.ssh
+          echo "${SSH_PRIVATE_KEY}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
 
       - name: Deploy via SSH
-        run: |
-          ssh -i ~/id_ed25519 -o StrictHostKeyChecking=no root@${SSH_SERVER} "
-            cd ${DEPLOY_DIR} &&
-            git pull &&
-            docker compose build &&
-            docker compose down &&
-            docker compose up -d &&
-            docker image prune -af &&
+        uses: appleboy/ssh-action@v0.1.8
+        with:
+          host: ${{ env.SSH_SERVER }}
+          username: root
+          key: ${{ env.SSH_PRIVATE_KEY }}
+          script: |
+            cd ${DEPLOY_DIR}
+            git pull
+            docker compose build
+            docker compose down
+            docker compose up -d
+            docker image prune -af
             docker builder prune -af
-          "
 
       - name: Cleanup SSH Key
         run: |
-          # Runner SSH private key remove
-          rm -f ~/id_ed25519
+          rm -f ~/.ssh/id_ed25519
