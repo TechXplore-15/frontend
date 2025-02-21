@@ -9,7 +9,7 @@ on:
 jobs:
   build:
     name: Build Docker Images
-    runs-on: homelab
+    runs-on: ubuntu-latest
 
     steps:
       - name: Fix Repo Permissions
@@ -34,7 +34,7 @@ jobs:
   deploy:
     name: Deploy to Dev Server
     needs: build
-    runs-on: homelab
+    runs-on: ubuntu-latest
     environment:
       name: env
       url: web.dev.x.devops-ninja.me
