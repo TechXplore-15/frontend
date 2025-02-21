@@ -1,8 +1,5 @@
-import TransactionList from '@/components/transaction-list';
+import { appRouter } from '@/routes/router';
 import React from 'react';
+import { RouterProvider } from 'react-router';
 
-export const App: React.FC = () => (
-  <div>
-    <TransactionList />
-  </div>
-);
+export const App: React.FC = () => <RouterProvider router={appRouter} />;
