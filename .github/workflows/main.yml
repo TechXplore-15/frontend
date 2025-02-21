@@ -1,4 +1,4 @@
-name: Web Deployment
+name: Frontend Deployment
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
 jobs:
   build:
     name: Build and Test Docker Images
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest 
 
     steps:
       - name: Checkout Repository
@@ -20,6 +20,8 @@ jobs:
         run: |
           sudo chown -R $USER:$USER ${{ github.workspace }}
           sudo chmod -R u+rwX ${{ github.workspace }}
+          pwd ${{ github.workspace }}
+          ls ${{ github.workspace }}
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
@@ -34,9 +36,11 @@ jobs:
 
       - name: Build Docker Images
         run: |
-          docker compose build \
-            --cache-from type=local,src=/tmp/.buildx-cache \
-            --cache-to type=local,dest=/tmp/.buildx-cache
+          docker compose -f ${{ github.workspace }}/compose.yml build
+
+      - name: Create Proxy Network
+        run: |
+          docker network create proxy
 
       - name: Run Tests
         run: |
@@ -54,7 +58,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: env
-      url: web.dev.x.devops-ninja.me
+      url: https://web.dev.x.devops-ninja.me
 
     env:
       SSH_SERVER: ${{ vars.SSH_SERVER }}
@@ -75,7 +79,9 @@ jobs:
           username: root
           key: ${{ env.SSH_PRIVATE_KEY }}
           script: |
-            cd ${DEPLOY_DIR}
+            cd ${{ vars.DEPLOY_DIR }}
+            pwd
+            ls
             git pull
             docker compose build
             docker compose down
