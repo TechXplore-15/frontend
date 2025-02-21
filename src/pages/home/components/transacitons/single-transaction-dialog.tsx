@@ -1,5 +1,12 @@
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
+import { SubscribeForm } from '@/pages/home/components/transacitons/subscribe-form';
 import { type SingleTransactionDialogProps } from '@/pages/home/components/transacitons/types';
+import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
 import { CheckCircle2 } from 'lucide-react';
 import React from 'react';
 
@@ -12,6 +19,9 @@ export const SingleTransactionDialog: React.FC<
         {children}
       </DialogTrigger>
       <DialogContent className='sm:max-w-[425px]'>
+        <DialogTitle>
+          <VisuallyHidden.Root>Transaction details</VisuallyHidden.Root>
+        </DialogTitle>
         {transaction && (
           <div className='space-y-4'>
             <div className='border-b pb-4'>
@@ -55,6 +65,8 @@ export const SingleTransactionDialog: React.FC<
                 </div>
               </div>
             </div>
+
+            <SubscribeForm />
           </div>
         )}
       </DialogContent>
