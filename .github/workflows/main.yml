@@ -79,7 +79,7 @@ jobs:
           username: root
           key: ${{ env.SSH_PRIVATE_KEY }}
           script: |
-            cd ${DEPLOY_DIR}
+            cd ${{ vars.DEPLOY_DIR }}
             pwd
             ls
             git pull
