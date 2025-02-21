@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { type Transaction } from '@/pages/home/components/types';
+import { type Transaction } from '@/pages/home/components/transacitons/types';
 import { type ColumnDef } from '@tanstack/react-table';
 import { ArrowUpDown, CheckCircle2, ChevronRight } from 'lucide-react';
 
