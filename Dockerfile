@@ -1,4 +1,4 @@
-# Use Node.js LTS for building the app
+# Use Node.js as builder image
 FROM node:20-alpine3.19 as builder
 
 # Set the working directory
