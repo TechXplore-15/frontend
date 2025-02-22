@@ -26,9 +26,6 @@ export const SingleTransactionDialog: React.FC<
           <div className='space-y-4'>
             <div className='border-b pb-4'>
               <h2 className='text-lg font-semibold'>ტრანზაქციის დეტალები</h2>
-              <p className='text-sm text-muted-foreground'>
-                {transaction.generatedDate}
-              </p>
             </div>
 
             <div className='space-y-3'>
