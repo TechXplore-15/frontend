@@ -21,17 +21,16 @@ import { Input } from '@/components/ui/input';
 import { columns } from '@/pages/home/utils/transaction-table-columns';
 import { SingleTransactionDialog } from '@/pages/home/components/transacitons/single-transaction-dialog';
 import { useGetSubscriptions } from '@/hooks/react-query/queries/use-get-subscriptions';
+import { Loading } from '@/components/ui/loading';
 
 export const TransactionList: React.FC = () => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState('');
 
-  const { data } = useGetSubscriptions('3');
-
-  const subscriptions = data?.subscriptions || [];
+  const { data, isLoading } = useGetSubscriptions('2');
 
   const table = useReactTable({
-    data: subscriptions,
+    data: data || [],
     columns: columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -44,6 +43,10 @@ export const TransactionList: React.FC = () => {
       globalFilter,
     },
   });
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <Card className='w-full min-w-xl'>

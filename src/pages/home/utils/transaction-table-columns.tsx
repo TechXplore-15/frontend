@@ -1,31 +1,12 @@
-import type { SubscriptionWGenDates } from '@/api/types';
+import type { Subscription } from '@/api/types';
 import { type ColumnDef } from '@tanstack/react-table';
-import { CheckCircle2, ArrowUpDown, ChevronRight } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { CheckCircle2, ChevronRight } from 'lucide-react';
 
-export const columns: ColumnDef<SubscriptionWGenDates>[] = [
+export const columns: ColumnDef<Subscription>[] = [
   {
     accessorKey: 'status',
     header: 'სტატუსი',
     cell: () => <CheckCircle2 className='size-4 text-green-700' />,
-  },
-
-  {
-    accessorKey: 'date',
-    header: ({ column }) => (
-      <Button
-        variant='ghost'
-        onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-      >
-        თარიღი
-        <ArrowUpDown className='ml-2 size-4' />
-      </Button>
-    ),
-    cell: ({ row }) => (
-      <span className='whitespace-nowrap text-xs text-muted-foreground'>
-        {row.getValue('generatedDate')}
-      </span>
-    ),
   },
 
   {

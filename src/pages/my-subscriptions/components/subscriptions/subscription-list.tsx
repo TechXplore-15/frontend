@@ -20,17 +20,18 @@ import {
 import { Input } from '@/components/ui/input';
 import { subscriptionTableColumns } from '@/pages/my-subscriptions/utils/subscription-table-columns';
 import { useGetSubscriptions } from '@/hooks/react-query/queries/use-get-subscriptions';
+import { Loading } from '@/components/ui/loading';
 
 export const SubscriptionList: React.FC = () => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState('');
 
-  const { data } = useGetSubscriptions('3');
+  const { data, isLoading } = useGetSubscriptions('2');
 
-  const subscriptions = data?.subscriptions || [];
+  console.log(data);
 
   const table = useReactTable({
-    data: subscriptions,
+    data: data || [],
     columns: subscriptionTableColumns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -43,6 +44,10 @@ export const SubscriptionList: React.FC = () => {
       globalFilter,
     },
   });
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <Card className='w-full min-w-xl'>

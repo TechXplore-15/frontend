@@ -4,7 +4,7 @@ import { CheckCircle2, ChevronRight, XCircle } from 'lucide-react';
 
 export const subscriptionTableColumns: ColumnDef<Subscription>[] = [
   {
-    accessorKey: 'subscriptionName',
+    accessorKey: 'subscriber_name',
     header: 'გამოწერა',
     cell: ({ row }) => (
       <span className='text-sm font-medium text-foreground'>
@@ -13,7 +13,7 @@ export const subscriptionTableColumns: ColumnDef<Subscription>[] = [
     ),
   },
   {
-    accessorKey: 'accNumber',
+    accessorKey: 'subscriber_account',
     header: 'ანგარიშის ნომერი',
     cell: ({ row }) => (
       <span className='text-sm text-muted-foreground'>
@@ -22,7 +22,7 @@ export const subscriptionTableColumns: ColumnDef<Subscription>[] = [
     ),
   },
   {
-    accessorKey: 'status',
+    accessorKey: 'is_active',
     header: 'სტატუსი',
     cell: ({ row }) => {
       const isActive = row.getValue('is_active');
@@ -37,7 +37,15 @@ export const subscriptionTableColumns: ColumnDef<Subscription>[] = [
       );
     },
   },
-
+  {
+    accessorKey: 'end_date',
+    header: 'გადახდა თარიღამდე',
+    cell: ({ row }) => (
+      <span className='whitespace-nowrap text-xs text-muted-foreground'>
+        {row.getValue('end_date')}
+      </span>
+    ),
+  },
   {
     accessorKey: 'actions',
     header: '',

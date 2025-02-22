@@ -7,7 +7,3 @@ export type Subscription = {
   end_date: string;
   is_active: boolean;
 };
-
-export type SubscriptionWGenDates = Subscription & {
-  generatedDate: string;
-};

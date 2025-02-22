@@ -26,10 +26,10 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 import { useSubscribe } from '@/hooks/react-query/mutations/use-subscribe';
-import type { Subscription, SubscriptionWGenDates } from '@/api/types';
+import type { Subscription } from '@/api/types';
 
 export const SubscribeForm: React.FC<{
-  transaction: SubscriptionWGenDates;
+  transaction: Subscription;
 }> = ({ transaction }) => {
   const { mutate } = useSubscribe();
 
@@ -51,7 +51,7 @@ export const SubscribeForm: React.FC<{
   }, [isActive, form]);
 
   const onSubmit = (values: SubscribeSchema) => {
-    const day = transaction.generatedDate?.toString().split(' ')[0];
+    const day = new Date().getDate();
 
     const payload: Subscription = {
       user: 2,
