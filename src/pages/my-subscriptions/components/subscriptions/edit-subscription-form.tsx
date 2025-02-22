@@ -25,13 +25,14 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import { useSubscribe } from '@/hooks/react-query/mutations/use-subscribe';
 import type { Subscription } from '@/api/types';
+import { useUpdateSubscription } from '@/hooks/react-query/mutations/use-update-subscription';
 
-export const SubscribeForm: React.FC<{
-  transaction: Subscription;
-}> = ({ transaction }) => {
-  const { mutate } = useSubscribe();
+export const EditSubscriptionForm: React.FC<{
+  subscription: Subscription;
+}> = ({ subscription }) => {
+  const { mutate } = useUpdateSubscription();
+  const { subscriber_name, end_date, is_active } = subscription;
 
   const form = useForm<SubscribeSchema>({
     resolver: zodResolver(subscribeSchema),
@@ -45,19 +46,29 @@ export const SubscribeForm: React.FC<{
   const isActive = form.watch('isActive');
 
   useEffect(() => {
+    if (subscriber_name && is_active && end_date) {
+      form.reset({
+        subName: subscriber_name,
+        isActive: is_active,
+        endDate: new Date(end_date),
+      });
+    }
+  }, [subscriber_name, is_active, end_date, form]);
+
+  useEffect(() => {
     if (!isActive) {
       form.setValue('endDate', undefined);
     }
   }, [isActive, form]);
 
   const onSubmit = (values: SubscribeSchema) => {
-    const day = new Date().getDate();
+    // const day = subscription.generatedDate?.toString().split(' ')[0];
 
     const payload: Subscription = {
       user: 2,
       subscriber_name: values.subName,
-      subscriber_account: transaction.subscriber_account,
-      pay_day: day,
+      subscriber_account: subscription.subscriber_account,
+      pay_day: 13,
       is_subscribe: true,
       end_date: values.endDate
         ? values.endDate.toISOString().split('T')[0]
@@ -65,7 +76,7 @@ export const SubscribeForm: React.FC<{
       is_active: values.isActive,
     };
 
-    mutate(payload);
+    mutate({ userId: '2', updateData: payload });
   };
 
   return (

@@ -1,4 +1,4 @@
-import { postSubscription } from '@/api/subscription/services';
+import { patchSubscription } from '@/api/subscription/services';
 import type { Subscription } from '@/api/types';
 import { QUERY_KEYS } from '@/hooks/react-query/enums';
 import { PATHS } from '@/routes/enums';
@@ -10,25 +10,25 @@ import {
 import { useNavigate } from 'react-router';
 import { toast } from 'sonner';
 
-export const useSubscribe = (): UseMutationResult<
+export const useUpdateSubscription = (): UseMutationResult<
   void,
   Error,
-  Subscription
+  { userId: string; updateData: Partial<Subscription> }
 > => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
   return useMutation({
-    mutationFn: (subscriptionData: Subscription) =>
-      postSubscription(subscriptionData),
+    mutationFn: ({ userId, updateData }) =>
+      patchSubscription(userId, updateData),
     onSuccess: () => {
-      toast.success('წარმატებით დაემატა გამოწერა');
+      toast.success('გამოწერა წარმატებით შეიცვალა');
 
       queryClient.invalidateQueries({
-        queryKey: [QUERY_KEYS.SUBSCRIPTIONS, 2],
+        queryKey: [QUERY_KEYS.SUBSCRIPTIONS],
       });
 
-      navigate(PATHS.HOME);
+      navigate(PATHS.MY_SUBSCRIPTIONS);
     },
   });
 };

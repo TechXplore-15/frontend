@@ -19,29 +19,19 @@ import {
 } from '@/components/ui/table';
 import { Input } from '@/components/ui/input';
 import { subscriptionTableColumns } from '@/pages/my-subscriptions/utils/subscription-table-columns';
-
-// Sample data - replace with your actual data
-const subscriptions = [
-  {
-    subscriptionName: 'Premium Plan',
-    accNumber: 'GE123456789',
-    status: true,
-    activeDate: '2025-12-31',
-  },
-  {
-    subscriptionName: 'Basic Plan',
-    accNumber: 'GE987654321',
-    status: false,
-    activeDate: '2025-06-30',
-  },
-];
+import { useGetSubscriptions } from '@/hooks/react-query/queries/use-get-subscriptions';
+import { Loading } from '@/components/ui/loading';
 
 export const SubscriptionList: React.FC = () => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState('');
 
+  const { data, isLoading } = useGetSubscriptions('2');
+
+  console.log(data);
+
   const table = useReactTable({
-    data: subscriptions,
+    data: data || [],
     columns: subscriptionTableColumns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -54,6 +44,10 @@ export const SubscriptionList: React.FC = () => {
       globalFilter,
     },
   });
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <Card className='w-full min-w-xl'>

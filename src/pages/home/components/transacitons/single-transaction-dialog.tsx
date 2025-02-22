@@ -13,7 +13,6 @@ import React from 'react';
 export const SingleTransactionDialog: React.FC<
   SingleTransactionDialogProps
 > = ({ transaction, children }) => {
-  console.log(transaction);
   return (
     <Dialog>
       <DialogTrigger asChild className='cursor-pointer'>
@@ -28,7 +27,7 @@ export const SingleTransactionDialog: React.FC<
             <div className='border-b pb-4'>
               <h2 className='text-lg font-semibold'>ტრანზაქციის დეტალები</h2>
               <p className='text-sm text-muted-foreground'>
-                {transaction.date}
+                {transaction.generatedDate}
               </p>
             </div>
 
@@ -37,23 +36,7 @@ export const SingleTransactionDialog: React.FC<
                 <h3 className='text-sm font-medium text-muted-foreground'>
                   დანიშნულება
                 </h3>
-                <p className='text-sm'>{transaction.description}</p>
-              </div>
-
-              <div>
-                <h3 className='text-sm font-medium text-muted-foreground'>
-                  თანხა
-                </h3>
-                <p
-                  className={`text-lg font-semibold ${Number(transaction.amount) > 0 ? 'text-green-600' : 'text-muted-foreground'}`}
-                >
-                  {Number(transaction.amount) > 0 ? '+' : ''}
-                  {Number(transaction.amount).toLocaleString('ka-GE', {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2,
-                  })}{' '}
-                  GEL
-                </p>
+                <p className='text-sm'>{transaction.subscriber_name}</p>
               </div>
 
               <div>
