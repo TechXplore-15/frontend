@@ -1,6 +1,6 @@
-import type { SubscriptionWGenDates } from '@/api/types';
+import type { Subscription } from '@/api/types';
 
 export type SingleSubscriptionDialogProps = {
-  subscription: SubscriptionWGenDates;
+  subscription: Subscription;
   children: React.ReactNode;
 };

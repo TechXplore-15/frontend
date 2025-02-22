@@ -1,4 +1,4 @@
-import { SubscriptionWGenDates } from '@/api/types';
+import { Subscription } from '@/api/types';
 
 export type Transaction = {
   date?: string;
@@ -8,6 +8,6 @@ export type Transaction = {
 };
 
 export type SingleTransactionDialogProps = {
-  transaction: SubscriptionWGenDates;
+  transaction: Subscription;
   children: React.ReactNode;
 };
