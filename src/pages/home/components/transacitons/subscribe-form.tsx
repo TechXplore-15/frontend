@@ -27,8 +27,11 @@ import {
 } from '@/components/ui/popover';
 import { useSubscribe } from '@/hooks/react-query/mutations/use-subscribe';
 import type { Subscription } from '@/api/types';
+import type { Transaction } from '@/pages/home/components/transacitons/types';
 
-export const SubscribeForm: React.FC<{ peerAcc: string }> = ({ peerAcc }) => {
+export const SubscribeForm: React.FC<{ transaction: Transaction }> = ({
+  transaction,
+}) => {
   const { mutate } = useSubscribe();
 
   const form = useForm<SubscribeSchema>({
@@ -49,10 +52,14 @@ export const SubscribeForm: React.FC<{ peerAcc: string }> = ({ peerAcc }) => {
   }, [isActive, form]);
 
   const onSubmit = (values: SubscribeSchema) => {
+    const day = transaction.date.toString().split(' ')[0];
+
     const payload: Subscription = {
-      user_id: 2,
-      card_name: values.subName,
-      card_account: peerAcc,
+      user: 2,
+      subscriber_name: values.subName,
+      subscriber_account: transaction.peerAcc,
+      pay_day: day,
+      is_subscribe: true,
       end_date: values.endDate
         ? values.endDate.toISOString().split('T')[0]
         : '',

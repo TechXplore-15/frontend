@@ -13,6 +13,7 @@ import React from 'react';
 export const SingleTransactionDialog: React.FC<
   SingleTransactionDialogProps
 > = ({ transaction, children }) => {
+  console.log(transaction);
   return (
     <Dialog>
       <DialogTrigger asChild className='cursor-pointer'>
@@ -66,7 +67,7 @@ export const SingleTransactionDialog: React.FC<
               </div>
             </div>
 
-            <SubscribeForm peerAcc={transaction.peerAcc} />
+            <SubscribeForm transaction={transaction} />
           </div>
         )}
       </DialogContent>
