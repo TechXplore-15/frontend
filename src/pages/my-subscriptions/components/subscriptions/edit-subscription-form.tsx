@@ -28,9 +28,9 @@ import {
 import { useSubscribe } from '@/hooks/react-query/mutations/use-subscribe';
 import type { Subscription, SubscriptionWGenDates } from '@/api/types';
 
-export const SubscribeForm: React.FC<{
-  transaction: SubscriptionWGenDates;
-}> = ({ transaction }) => {
+export const EditSubscriptionForm: React.FC<{
+  subscription: SubscriptionWGenDates;
+}> = ({ subscription }) => {
   const { mutate } = useSubscribe();
 
   const form = useForm<SubscribeSchema>({
@@ -51,12 +51,12 @@ export const SubscribeForm: React.FC<{
   }, [isActive, form]);
 
   const onSubmit = (values: SubscribeSchema) => {
-    const day = transaction.generatedDate?.toString().split(' ')[0];
+    const day = subscription.generatedDate?.toString().split(' ')[0];
 
     const payload: Subscription = {
       user: 2,
       subscriber_name: values.subName,
-      subscriber_account: transaction.subscriber_account,
+      subscriber_account: subscription.subscriber_account,
       pay_day: day,
       is_subscribe: true,
       end_date: values.endDate

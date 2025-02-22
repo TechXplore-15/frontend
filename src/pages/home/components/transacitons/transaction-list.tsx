@@ -18,16 +18,20 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Input } from '@/components/ui/input';
-import { transactions } from '@/pages/home/utils/transactions-table-data';
 import { columns } from '@/pages/home/utils/transaction-table-columns';
 import { SingleTransactionDialog } from '@/pages/home/components/transacitons/single-transaction-dialog';
+import { useGetSubscriptions } from '@/hooks/react-query/queries/use-get-subscriptions';
 
 export const TransactionList: React.FC = () => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState('');
 
+  const { data } = useGetSubscriptions('3');
+
+  const subscriptions = data?.subscriptions || [];
+
   const table = useReactTable({
-    data: transactions,
+    data: subscriptions,
     columns: columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),

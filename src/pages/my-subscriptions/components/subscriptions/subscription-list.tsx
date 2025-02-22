@@ -19,26 +19,15 @@ import {
 } from '@/components/ui/table';
 import { Input } from '@/components/ui/input';
 import { subscriptionTableColumns } from '@/pages/my-subscriptions/utils/subscription-table-columns';
-
-// Sample data - replace with your actual data
-const subscriptions = [
-  {
-    subscriptionName: 'Premium Plan',
-    accNumber: 'GE123456789',
-    status: true,
-    activeDate: '2025-12-31',
-  },
-  {
-    subscriptionName: 'Basic Plan',
-    accNumber: 'GE987654321',
-    status: false,
-    activeDate: '2025-06-30',
-  },
-];
+import { useGetSubscriptions } from '@/hooks/react-query/queries/use-get-subscriptions';
 
 export const SubscriptionList: React.FC = () => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState('');
+
+  const { data } = useGetSubscriptions('3');
+
+  const subscriptions = data?.subscriptions || [];
 
   const table = useReactTable({
     data: subscriptions,

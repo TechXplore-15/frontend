@@ -1,7 +1,6 @@
-import { Button } from '@/components/ui/button';
 import type { Subscription } from '@/api/types';
 import { type ColumnDef } from '@tanstack/react-table';
-import { ArrowUpDown, CheckCircle2, XCircle } from 'lucide-react';
+import { CheckCircle2, ChevronRight, XCircle } from 'lucide-react';
 
 export const subscriptionTableColumns: ColumnDef<Subscription>[] = [
   {
@@ -9,7 +8,7 @@ export const subscriptionTableColumns: ColumnDef<Subscription>[] = [
     header: 'გამოწერა',
     cell: ({ row }) => (
       <span className='text-sm font-medium text-foreground'>
-        {row.getValue('subscriptionName')}
+        {row.getValue('subscriber_name')}
       </span>
     ),
   },
@@ -18,7 +17,7 @@ export const subscriptionTableColumns: ColumnDef<Subscription>[] = [
     header: 'ანგარიშის ნომერი',
     cell: ({ row }) => (
       <span className='text-sm text-muted-foreground'>
-        {row.getValue('accNumber')}
+        {row.getValue('subscriber_account')}
       </span>
     ),
   },
@@ -26,7 +25,7 @@ export const subscriptionTableColumns: ColumnDef<Subscription>[] = [
     accessorKey: 'status',
     header: 'სტატუსი',
     cell: ({ row }) => {
-      const isActive = row.getValue('status');
+      const isActive = row.getValue('is_active');
       return isActive ? (
         <div className='flex items-center text-green-600'>
           <CheckCircle2 className='size-5 mr-1' />
@@ -38,21 +37,10 @@ export const subscriptionTableColumns: ColumnDef<Subscription>[] = [
       );
     },
   },
+
   {
-    accessorKey: 'activeDate',
-    header: ({ column }) => (
-      <Button
-        variant='ghost'
-        onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-      >
-        აქტიურია
-        <ArrowUpDown className='ml-2 h-4 w-4' />
-      </Button>
-    ),
-    cell: ({ row }) => (
-      <span className='whitespace-nowrap text-xs text-muted-foreground'>
-        {new Date(row.getValue('activeDate')).toLocaleDateString('ka-GE')}
-      </span>
-    ),
+    accessorKey: 'actions',
+    header: '',
+    cell: () => <ChevronRight className='size-4' />,
   },
 ];
