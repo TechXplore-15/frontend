@@ -66,7 +66,7 @@ export const SingleTransactionDialog: React.FC<
               </div>
             </div>
 
-            <SubscribeForm />
+            <SubscribeForm peerAcc={transaction.peerAcc} />
           </div>
         )}
       </DialogContent>

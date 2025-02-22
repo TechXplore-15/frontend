@@ -25,8 +25,12 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
+import { useSubscribe } from '@/hooks/react-query/mutations/use-subscribe';
+import type { Subscription } from '@/api/types';
 
-export const SubscribeForm: React.FC = () => {
+export const SubscribeForm: React.FC<{ peerAcc: string }> = ({ peerAcc }) => {
+  const { mutate } = useSubscribe();
+
   const form = useForm<SubscribeSchema>({
     resolver: zodResolver(subscribeSchema),
     defaultValues: {
@@ -38,9 +42,6 @@ export const SubscribeForm: React.FC = () => {
 
   const isActive = form.watch('isActive');
 
-  console.log(isActive);
-  console.log(form.formState.errors);
-
   useEffect(() => {
     if (!isActive) {
       form.setValue('endDate', undefined);
@@ -48,7 +49,18 @@ export const SubscribeForm: React.FC = () => {
   }, [isActive, form]);
 
   const onSubmit = (values: SubscribeSchema) => {
-    console.log(values);
+    const payload: Subscription = {
+      user_id: 2,
+      card_name: values.subName,
+      card_account: peerAcc,
+      end_date: values.endDate
+        ? values.endDate.toISOString().split('T')[0]
+        : '',
+      is_active: values.isActive,
+    };
+
+    console.log(payload);
+    mutate(payload);
   };
 
   return (
