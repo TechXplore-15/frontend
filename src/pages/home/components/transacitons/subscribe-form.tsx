@@ -88,6 +88,7 @@ export const SubscribeForm: React.FC<{ peerAcc: string }> = ({ peerAcc }) => {
                 <Checkbox
                   checked={field.value}
                   onCheckedChange={field.onChange}
+                  className='border border-primary'
                 />
               </FormControl>
               <div className='space-y-1 leading-none'>
