@@ -32,7 +32,7 @@ export const columns: ColumnDef<Transaction>[] = [
     accessorKey: 'description',
     header: 'დანიშნულება/დეტალები',
     cell: ({ row }) => (
-      <span className='text-sm font-medium text-foreground'>
+      <span className='text-sm font-medium text-foreground max-w-[140px] md:max-w-[200px]  xl:max-w-[290px] truncate block'>
         {row.getValue('description')}
       </span>
     ),
