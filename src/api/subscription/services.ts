@@ -5,7 +5,6 @@ import type { Subscription } from '@/api/types';
 export const postSubscription = async (cardData: Subscription) => {
   try {
     const response = await httpClient.post(ENDPOINTS.SUBSCRIPTION, cardData);
-    console.log('Response:', response.data);
     return response.data;
   } catch (error) {
     console.error('Error posting card:', error);
@@ -34,7 +33,6 @@ export const patchSubscription = async (
       `${ENDPOINTS.SUBSCRIPTION}?user=${userId}`,
       updateData,
     );
-    console.log('Updated Subscription:', response.data);
     return response.data;
   } catch (error) {
     console.error('Error updating subscription:', error);

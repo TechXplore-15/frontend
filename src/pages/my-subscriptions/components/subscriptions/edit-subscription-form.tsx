@@ -30,9 +30,10 @@ import { useUpdateSubscription } from '@/hooks/react-query/mutations/use-update-
 
 export const EditSubscriptionForm: React.FC<{
   subscription: Subscription;
-}> = ({ subscription }) => {
+  onClose: () => void;
+}> = ({ subscription, onClose }) => {
   const { mutate } = useUpdateSubscription();
-  const { subscriber_name, end_date, is_active, card_id } = subscription;
+  const { subscriber_name, end_date, is_active, id } = subscription;
 
   const form = useForm<SubscribeSchema>({
     resolver: zodResolver(subscribeSchema),
@@ -62,17 +63,17 @@ export const EditSubscriptionForm: React.FC<{
   }, [isActive, form]);
 
   const onSubmit = (values: SubscribeSchema) => {
-    const payload: Partial<Subscription> = {
-      card_id,
+    const payload = {
+      card_id: id,
       subscriber_name: values.subName,
-      // subscriber_account,
-      // end_date: values.endDate
-      //   ? values.endDate.toISOString().split('T')[0]
-      //   : '',
-      // is_active: values.isActive,
+      end_date: values.endDate
+        ? values.endDate.toISOString().split('T')[0]
+        : '',
+      is_active: values.isActive,
     };
 
     mutate({ userId: '2', updateData: payload });
+    onClose();
   };
 
   return (
