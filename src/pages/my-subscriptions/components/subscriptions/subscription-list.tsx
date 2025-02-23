@@ -49,7 +49,7 @@ export const SubscriptionList: React.FC = () => {
   }
 
   return (
-    <Card className='w-full min-w-xl'>
+    <Card className='w-full md:min-w-3xl sm:min-w-2xl min-w-md sm:px-0 px-4'>
       <CardHeader className='border-b'>
         <CardTitle className='text-lg font-medium'>გამოწერები</CardTitle>
         <Input

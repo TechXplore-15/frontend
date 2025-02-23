@@ -26,5 +26,9 @@ export const useUpdateSubscription = (): UseMutationResult<
         queryKey: [QUERY_KEYS.SUBSCRIPTIONS, '2'],
       });
     },
+
+    onError: () => {
+      toast.error('გამოწერის განახლება ვერ მოხერხდა');
+    },
   });
 };

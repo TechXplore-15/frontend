@@ -7,13 +7,15 @@ import {
 import { EditSubscriptionForm } from '@/pages/my-subscriptions/components/subscriptions/edit-subscription-form';
 import { SingleSubscriptionDialogProps } from '@/pages/my-subscriptions/components/subscriptions/types';
 import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
-import React from 'react';
+import React, { useState } from 'react';
 
 export const SingleSubscriptionDialog: React.FC<
   SingleSubscriptionDialogProps
 > = ({ subscription, children }) => {
+  const [open, setOpen] = useState(false);
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild className='cursor-pointer'>
         {children}
       </DialogTrigger>
@@ -23,7 +25,10 @@ export const SingleSubscriptionDialog: React.FC<
         </DialogTitle>
         {subscription && (
           <div className='space-y-4'>
-            <EditSubscriptionForm subscription={subscription} />
+            <EditSubscriptionForm
+              subscription={subscription}
+              onClose={() => setOpen(false)}
+            />
           </div>
         )}
       </DialogContent>
