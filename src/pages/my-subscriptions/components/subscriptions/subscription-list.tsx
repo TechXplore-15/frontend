@@ -21,14 +21,13 @@ import { Input } from '@/components/ui/input';
 import { subscriptionTableColumns } from '@/pages/my-subscriptions/utils/subscription-table-columns';
 import { useGetSubscriptions } from '@/hooks/react-query/queries/use-get-subscriptions';
 import { Loading } from '@/components/ui/loading';
+import { SingleSubscriptionDialog } from '@/pages/my-subscriptions/components/subscriptions/single-subscription-dialog';
 
 export const SubscriptionList: React.FC = () => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState('');
 
   const { data, isLoading } = useGetSubscriptions('2');
-
-  console.log(data);
 
   const table = useReactTable({
     data: data || [],
@@ -81,20 +80,25 @@ export const SubscriptionList: React.FC = () => {
           <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow
+                <SingleSubscriptionDialog
                   key={row.id}
-                  data-state={row.getIsSelected() && 'selected'}
-                  className='group hover:bg-muted/20 h-16'
+                  subscription={row.original}
                 >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext(),
-                      )}
-                    </TableCell>
-                  ))}
-                </TableRow>
+                  <TableRow
+                    key={row.id}
+                    data-state={row.getIsSelected() && 'selected'}
+                    className='group hover:bg-muted/20 h-16'
+                  >
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell key={cell.id}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext(),
+                        )}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                </SingleSubscriptionDialog>
               ))
             ) : (
               <TableRow>

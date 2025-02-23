@@ -1,4 +1,5 @@
 export type Subscription = {
+  card_id?: number;
   user: number;
   subscriber_name: string;
   subscriber_account: string;

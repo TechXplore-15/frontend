@@ -32,7 +32,7 @@ export const EditSubscriptionForm: React.FC<{
   subscription: Subscription;
 }> = ({ subscription }) => {
   const { mutate } = useUpdateSubscription();
-  const { subscriber_name, end_date, is_active } = subscription;
+  const { subscriber_name, end_date, is_active, card_id } = subscription;
 
   const form = useForm<SubscribeSchema>({
     resolver: zodResolver(subscribeSchema),
@@ -62,18 +62,14 @@ export const EditSubscriptionForm: React.FC<{
   }, [isActive, form]);
 
   const onSubmit = (values: SubscribeSchema) => {
-    // const day = subscription.generatedDate?.toString().split(' ')[0];
-
-    const payload: Subscription = {
-      user: 2,
+    const payload: Partial<Subscription> = {
+      card_id,
       subscriber_name: values.subName,
-      subscriber_account: subscription.subscriber_account,
-      pay_day: 13,
-      is_subscribe: true,
-      end_date: values.endDate
-        ? values.endDate.toISOString().split('T')[0]
-        : '',
-      is_active: values.isActive,
+      // subscriber_account,
+      // end_date: values.endDate
+      //   ? values.endDate.toISOString().split('T')[0]
+      //   : '',
+      // is_active: values.isActive,
     };
 
     mutate({ userId: '2', updateData: payload });
@@ -155,7 +151,7 @@ export const EditSubscriptionForm: React.FC<{
         />
 
         <Button type='submit' className='w-full'>
-          გამოწერის დამატება
+          ცვლილებების შეტანა
         </Button>
       </form>
     </Form>
