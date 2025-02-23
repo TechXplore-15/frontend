@@ -22,10 +22,10 @@ export const subscriptionTableColumns: ColumnDef<Subscription>[] = [
     ),
   },
   {
-    accessorKey: 'is_active',
+    accessorKey: 'is_subscribe',
     header: 'სტატუსი',
     cell: ({ row }) => {
-      const isActive = row.getValue('is_active');
+      const isActive = row.getValue('is_subscribe');
       return isActive ? (
         <div className='flex items-center text-green-600'>
           <CheckCircle2 className='size-5 mr-1' />
