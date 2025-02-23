@@ -18,7 +18,6 @@ export const getSubscriptions = async (userId: string) => {
     const response = await httpClient.get(
       `${ENDPOINTS.SUBSCRIPTION}?user=${userId}`,
     );
-
     return response.data;
   } catch (error) {
     console.error('Error fetching subscriptions:', error);
@@ -32,7 +31,7 @@ export const patchSubscription = async (
 ) => {
   try {
     const response = await httpClient.patch(
-      `${ENDPOINTS.SUBSCRIPTION}?user_id=${userId}`,
+      `${ENDPOINTS.SUBSCRIPTION}?user=${userId}`,
       updateData,
     );
     console.log('Updated Subscription:', response.data);

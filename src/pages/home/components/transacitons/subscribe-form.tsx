@@ -30,7 +30,8 @@ import type { Subscription } from '@/api/types';
 
 export const SubscribeForm: React.FC<{
   transaction: Subscription;
-}> = ({ transaction }) => {
+  onClose: () => void;
+}> = ({ transaction, onClose }) => {
   const { mutate } = useSubscribe();
 
   const form = useForm<SubscribeSchema>({
@@ -66,6 +67,7 @@ export const SubscribeForm: React.FC<{
     };
 
     mutate(payload);
+    onClose();
   };
 
   return (

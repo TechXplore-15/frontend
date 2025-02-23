@@ -8,13 +8,14 @@ import { SubscribeForm } from '@/pages/home/components/transacitons/subscribe-fo
 import { type SingleTransactionDialogProps } from '@/pages/home/components/transacitons/types';
 import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
 import { CheckCircle2 } from 'lucide-react';
-import React from 'react';
+import React, { useState } from 'react';
 
 export const SingleTransactionDialog: React.FC<
   SingleTransactionDialogProps
 > = ({ transaction, children }) => {
+  const [open, setOpen] = useState(false);
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild className='cursor-pointer'>
         {children}
       </DialogTrigger>
@@ -47,7 +48,10 @@ export const SingleTransactionDialog: React.FC<
               </div>
             </div>
 
-            <SubscribeForm transaction={transaction} />
+            <SubscribeForm
+              transaction={transaction}
+              onClose={() => setOpen(false)}
+            />
           </div>
         )}
       </DialogContent>

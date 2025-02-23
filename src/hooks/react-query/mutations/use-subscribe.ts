@@ -25,7 +25,7 @@ export const useSubscribe = (): UseMutationResult<
       toast.success('წარმატებით დაემატა გამოწერა');
 
       queryClient.invalidateQueries({
-        queryKey: [QUERY_KEYS.SUBSCRIPTIONS, 2],
+        queryKey: [QUERY_KEYS.SUBSCRIPTIONS, '2'],
       });
 
       navigate(PATHS.HOME);
