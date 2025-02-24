@@ -82,6 +82,7 @@ jobs:
             cd ${{ vars.DEPLOY_DIR }}
             pwd
             ls
+            echo ${{ vars.VITE_BASE_URL }} > .env
             git pull
             docker compose build
             docker compose down
