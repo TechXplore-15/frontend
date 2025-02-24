@@ -5,7 +5,8 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: frontend-dev
-    restart: unless-stopped
+    restart:
+      unless-stopped
       #ports:
       #  - "8085:80"
     networks:
