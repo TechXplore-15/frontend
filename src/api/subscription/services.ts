@@ -17,7 +17,7 @@ export const getSubscriptions = async (userId: string) => {
     const response = await httpClient.get(
       `${ENDPOINTS.SUBSCRIPTION}?user=${userId}`,
     );
-    console.log(response.data);
+
     return response.data;
   } catch (error) {
     console.error('Error fetching subscriptions:', error);

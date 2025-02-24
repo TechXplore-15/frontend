@@ -2,14 +2,14 @@ name: Frontend Deployment
 
 on:
   push:
-    branches: ["dev"]
+    branches: ['dev']
   pull_request:
-    branches: ["dev"]
+    branches: ['dev']
 
 jobs:
   build:
     name: Build and Test Docker Images
-    runs-on: ubuntu-latest 
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Repository
